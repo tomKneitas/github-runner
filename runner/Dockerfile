@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y      \
        iputils-ping						      \
        ca-certificates                                                \
        gnupg-agent                                                    \
-       locales                              			      \
        software-properties-common &&                                  \
                                                                       \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg           \
