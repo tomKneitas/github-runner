@@ -46,10 +46,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y      \
        /var/tmp/*                                                     \
        /usr/share/doc/*                                               \
        /usr/share/man/*                                               \
-       /usr/share/local/* &&                                          \
+       /usr/share/local/* 
                                                          
     # Add user "admin" to the Docker group
-    useradd --create-home --shell /bin/bash runner && echo "runner:runner" | chpasswd && adduser runner sudo && usermod -a -G docker runner
+RUN useradd --create-home --shell /bin/bash runner && echo "runner:runner" | chpasswd && adduser runner sudo && usermod -a -G docker runner
  
 USER runner
 WORKDIR /home/github
