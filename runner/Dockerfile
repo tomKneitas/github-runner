@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM ubuntu:20.04
 
 ARG TARGETPLATFORM=x86_64
 ARG RUNNER_VERSION=2.278.0
@@ -13,21 +13,40 @@ ENV RUNNER_LABELS ""
 ENV ADDITIONAL_PACKAGES ""
 
 
-RUN apt-get update \
-    && apt-get install -y \
-        curl \
-        sudo \
-        git \
-        jq \
-        iputils-ping \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && useradd -m github \
-    && usermod -aG sudo github \
-    && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && curl https://download.docker.com/linux/static/stable/${TARGETPLATFORM}/docker-${DOCKER_VERSION}.tgz --output docker-${DOCKER_VERSION}.tgz \
-    && tar xvfz docker-${DOCKER_VERSION}.tgz \
-    && cp docker/* /usr/bin/
+RUN apt-get update && apt-get install --no-install-recommends -y      \
+       apt-transport-https                                            \
+       ca-certificates                                                \
+       curl                                                           \
+       gnupg-agent                                                    \
+       software-properties-common &&                                  \
+                                                                      \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg           \
+         | apt-key add - &&                                           \
+	                                                              \
+    apt-key fingerprint 0EBFCD88 &&                                   \
+                                                                      \
+    add-apt-repository                                                \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu     \
+       $(lsb_release -cs)                                             \
+       stable" &&                                                     \
+                                                                      \
+    apt-get update && apt-get install --no-install-recommends -y      \
+       docker-ce docker-ce-cli containerd.io &&                       \
+                                                                      \
+    # Housekeeping
+    apt-get clean -y &&                                               \
+    rm -rf                                                            \
+       /var/cache/debconf/*                                           \
+       /var/lib/apt/lists/*                                           \
+       /var/log/*                                                     \
+       /tmp/*                                                         \
+       /var/tmp/*                                                     \
+       /usr/share/doc/*                                               \
+       /usr/share/man/*                                               \
+       /usr/share/local/* &&                                          \
+                                                                      \
+    # Add user "admin" to the Docker group
+    usermod -a -G docker github
 
 USER github
 WORKDIR /home/github
