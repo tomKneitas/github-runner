@@ -63,7 +63,7 @@ RUN set -vx; \
     && usermod -aG docker runner \
     && echo "%sudo   ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers
 
-USER runner
+
 WORKDIR /home/github
 
 RUN GITHUB_RUNNER_VERSION=$(curl --silent "https://api.github.com/repos/actions/runner/releases/latest" | jq -r '.tag_name[1:]') \
@@ -73,4 +73,5 @@ RUN GITHUB_RUNNER_VERSION=$(curl --silent "https://api.github.com/repos/actions/
 COPY --chown=github:github entrypoint.sh runsvc.sh ./
 RUN sudo chmod u+x ./entrypoint.sh ./runsvc.sh
 
+USER runner
 ENTRYPOINT ["/home/github/entrypoint.sh"]
