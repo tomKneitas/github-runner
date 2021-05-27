@@ -24,7 +24,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m github \
     && usermod -aG sudo github \
-    && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \\
+    && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && curl https://download.docker.com/linux/static/stable/${TARGETPLATFORM}/docker-${DOCKER_VERSION}.tgz --output docker-${DOCKER_VERSION}.tgz \
     && tar xvfz docker-${${DOCKER_VERSION}}.tgz \
     && cp docker/* /usr/bin/
