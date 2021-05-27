@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM ubuntu:20.04
 
 ENV GITHUB_PAT ""
 ENV GITHUB_TOKEN ""
