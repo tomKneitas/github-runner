@@ -20,10 +20,9 @@ RUN apt-get update \
     && useradd -m github \
     && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-    
+
 #install docker
-curl -fsSL https://get.docker.com -o get-docker.sh
- DRY_RUN=1 sh ./get-docker.sh
+RUN curl -fsSL https://get.docker.com -o get-docker.sh && DRY_RUN=1 sh ./get-docker.sh
 
 USER github
 WORKDIR /home/github
