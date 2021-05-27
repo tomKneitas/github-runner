@@ -15,9 +15,14 @@ ENV ADDITIONAL_PACKAGES ""
 
 RUN apt-get update && apt-get install --no-install-recommends -y      \
        apt-transport-https                                            \
+       curl 							      \
+       sudo 							      \
+       git  							      \
+       jq 							      \
+       iputils-ping						      \
        ca-certificates                                                \
-       curl                                                           \
        gnupg-agent                                                    \
+       locales                              			      \
        software-properties-common &&                                  \
                                                                       \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg           \
@@ -46,9 +51,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y      \
        /usr/share/local/* &&                                          \
                                                                       \
     # Add user "admin" to the Docker group
-    usermod -a -G docker github
+    useradd -h -s /bin/bash runner && echo "runner:runner" | chpasswd && adduser runner sudo && \
+    usermod -a -G docker runner 
 
-USER github
+USER runner
 WORKDIR /home/github
 
 RUN curl -Ls https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz | tar xz \
