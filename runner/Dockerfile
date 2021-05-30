@@ -9,7 +9,7 @@ ENV RUNNER_LABELS ""
 ENV ADDITIONAL_PACKAGES ""
 
 
-
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install -y \
         curl \
@@ -25,9 +25,9 @@ RUN apt-get update \
        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null \
     && apt-get clean \
     && apt-get update \
-    && apt-get install docker-ce docker-ce-cli containerd.io \
+    && apt-get install -y docker-ce docker-ce-cli containerd.io \
     && rm -rf /var/lib/apt/lists/* \
-    && useradd -m github && usermod -aG sudo github && groupadd docker && usermod -aG docker github \
+    && useradd -m github && usermod -aG sudo github && usermod -aG docker github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER github
