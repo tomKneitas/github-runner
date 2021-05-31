@@ -12,7 +12,7 @@ ENV ADDITIONAL_PACKAGES ""
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && apt-get -y --no-install-recommends install  \
         curl \
         sudo \
 	wget \
