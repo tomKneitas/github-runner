@@ -14,14 +14,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install -y \
         curl \
-	ca-certificates \
         sudo \
-	      gnupg \
-	      wget \
+	wget \
         git \
         jq \
-	lsb-release \
-        iputils-ping \
 	
     && VERSION="v1.21.0" \
     && wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz \
@@ -31,8 +27,6 @@ RUN apt-get update \
     && useradd -m github && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     
-
-
 USER github
 WORKDIR /home/github
 
