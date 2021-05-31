@@ -18,6 +18,8 @@ RUN apt-get update \
 	wget \
         git \
         jq \
+	dialog \
+	apt-utils \
 	
     && VERSION="v1.21.0" \
     && wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz \
