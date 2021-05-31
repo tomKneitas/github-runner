@@ -29,7 +29,7 @@ RUN apt-get update \
     && rm -f crictl-$VERSION-linux-amd64.tar.gz \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m github && usermod -aG sudo github \
-    && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     
 
 
