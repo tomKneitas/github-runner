@@ -17,19 +17,20 @@ RUN apt-get update \
 	ca-certificates \
         sudo \
 	      gnupg \
-        wget \
         git \
         jq \
 	lsb-release \
         iputils-ping \
+	
+    && VERSION="v1.21.0" \
+    && curl https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz \
+    && sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin \
+    && rm -f crictl-$VERSION-linux-amd64.tar.gz \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m github && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     
-    && VERSION="v1.21.0" \
-    && wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz \
-    && sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin \
-    && rm -f crictl-$VERSION-linux-amd64.tar.gz
+
 
 USER github
 WORKDIR /home/github
