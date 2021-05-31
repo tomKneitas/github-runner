@@ -13,6 +13,7 @@ ENV ADDITIONAL_PACKAGES ""
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get -y --no-install-recommends install  \
+    	ca-certificates \
         curl \
         sudo \
 	wget \
