@@ -26,6 +26,7 @@ RUN apt-get update \
     && wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz \
     && sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin \
     && rm -f crictl-$VERSION-linux-amd64.tar.gz \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m github && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
